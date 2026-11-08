@@ -7,6 +7,7 @@
 <title>五年级期中讲题台</title>
 <link rel="stylesheet" href="style.css">
 <script src="lessons.js" defer></script>
+<script src="explanations.js" defer></script>
 <script src="app.js" defer></script>
 </head>
 <body>
@@ -18,7 +19,7 @@
 <main class="workspace">
   <aside class="sidebar" aria-label="题目目录">
     <div class="sidebar-heading"><span class="eyebrow">试卷目录</span><h2 id="edition"></h2><a id="original" target="_blank" rel="noopener">查看 / 打印原卷 ↗</a></div>
-    <div id="audio-area"><label class="audio-picker">选取本地听力音频<input id="audio-file" type="file" accept="audio/*"></label><audio id="audio-player" controls hidden></audio></div>
+    <div id="audio-area"><a class="recording-link" href="https://mp.zhizhuma.com/a/2ak/1217DU3D353.q" target="_blank" rel="noopener noreferrer">打开原卷听力录音 ↗</a><label class="audio-picker">选取本地听力音频<input id="audio-file" type="file" accept="audio/*"></label><audio id="audio-player" controls hidden></audio></div>
     <nav id="contents" aria-label="按题定位"></nav>
   </aside>
   <section class="board" aria-label="原卷投屏">
@@ -41,7 +42,7 @@
   <aside id="notes" class="notes" aria-label="课堂讲解">
     <div class="notes-heading"><span class="eyebrow">当前讲题</span><h2 id="note-title"></h2><p id="note-prompt"></p></div>
     <button id="reveal" class="reveal" type="button" aria-expanded="false" aria-controls="solution">展开参考答案与讲解</button>
-    <div id="solution" hidden><h3>参考答案</h3><p id="note-key"></p><img id="note-figure" alt="原卷作图参考，红线是对称、平移和旋转后的三角形" hidden><h3>讲解</h3><p id="note-detail"></p></div>
+    <div id="solution" hidden><h3>参考答案</h3><p id="note-key"></p><img id="note-figure" alt="原卷作图参考，红线是对称、平移和旋转后的三角形" hidden><h3>讲题提示</h3><p id="note-detail"></p><h3 id="individual-heading">逐小题解析</h3><div id="individual-explanations"></div></div>
     <p class="note-footer">切换题目时会收起参考答案。</p>
   </aside>
 </main>

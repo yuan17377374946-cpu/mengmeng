@@ -67,7 +67,31 @@ function setReveal(open) {
   byId('solution').hidden = !open;
   byId('reveal').setAttribute('aria-expanded', String(open));
   const hasAnswer = Boolean(topicsFor(subject)[currentTopic][4]);
-  byId('reveal').textContent = open ? '收起' : hasAnswer ? '展开参考答案与讲解' : '展开听力讲解';
+  byId('reveal').textContent = open ? '收起' : hasAnswer ? '展开答案与逐题解析' : '展开逐题听力提示';
+}
+
+function renderIndividualExplanations() {
+  const container = byId('individual-explanations');
+  const rows = questionExplanations[subject][currentTopic];
+  byId('individual-heading').textContent = subject === 'en' && currentTopic < 5 ? '逐题听辨提示' : '逐小题解析';
+  const cards = rows.map(([label, answer, explanation]) => {
+    const card = document.createElement('details');
+    const summary = document.createElement('summary');
+    summary.textContent = label;
+    card.append(summary);
+    if (answer) {
+      const result = document.createElement('p');
+      result.className = 'individual-answer';
+      result.textContent = answer;
+      card.append(result);
+    }
+    const detail = document.createElement('p');
+    detail.className = 'individual-detail';
+    detail.textContent = explanation;
+    card.append(detail);
+    return card;
+  });
+  container.replaceChildren(...cards);
 }
 
 function renderNotes(topic) {
@@ -82,6 +106,7 @@ function renderNotes(topic) {
   diagram.hidden = !figure;
   if (figure) diagram.src = figure;
   else diagram.removeAttribute('src');
+  renderIndividualExplanations();
   setReveal(false);
   byId('notes').scrollTop = 0;
 }
