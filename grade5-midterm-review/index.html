@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="五年级期中试卷课堂讲解。英语海淀卷与数学同步卷，支持原卷批注与分题讲解。">
+<title>五年级期中讲题台</title>
+<link rel="stylesheet" href="style.css">
+<script src="lessons.js" defer></script>
+<script src="app.js" defer></script>
+</head>
+<body>
+<header class="masthead">
+  <div class="brand"><span class="monogram" aria-hidden="true">讲</span><div><p class="eyebrow">五年级 · 上册</p><h1>期中讲题台</h1></div></div>
+  <div class="subjects" aria-label="选择科目"><button data-course="en" aria-pressed="true">英语 <span>海淀卷</span></button><button data-course="math" aria-pressed="false">数学 <span>同步卷</span></button></div>
+  <button class="screen" id="fullscreen" type="button">全屏投屏</button>
+</header>
+<main class="workspace">
+  <aside class="sidebar" aria-label="题目目录">
+    <div class="sidebar-heading"><span class="eyebrow">试卷目录</span><h2 id="edition"></h2><a id="original" target="_blank" rel="noopener">查看 / 打印原卷 ↗</a></div>
+    <div id="audio-area"><label class="audio-picker">选取本地听力音频<input id="audio-file" type="file" accept="audio/*"></label><audio id="audio-player" controls hidden></audio></div>
+    <nav id="contents" aria-label="按题定位"></nav>
+  </aside>
+  <section class="board" aria-label="原卷投屏">
+    <div class="toolbar" aria-label="投屏工具">
+      <div class="controls" aria-label="翻页">
+        <button id="prev" type="button" aria-label="上一页">‹</button><span id="page-index" aria-live="polite"></span><button id="next" type="button" aria-label="下一页">›</button>
+      </div>
+      <div class="controls" aria-label="缩放">
+        <button id="zoom-out" type="button" aria-label="缩小">−</button><button id="fit" type="button" title="恢复适合宽度">适宽</button><button id="zoom-in" type="button" aria-label="放大">＋</button>
+      </div>
+      <div class="controls ink-tools" aria-label="批注">
+        <button data-tool="browse" aria-pressed="true">浏览</button><button data-tool="pen" aria-pressed="false"><span class="dot red"></span>红笔</button><button data-tool="highlight" aria-pressed="false"><span class="dot amber"></span>荧光笔</button><button id="undo" type="button">撤销</button><button id="clear" type="button">清空</button>
+      </div>
+      <button id="hide-notes" type="button" aria-expanded="true" aria-controls="notes">收起讲解</button>
+    </div>
+    <div id="viewer" class="viewer" tabindex="0" aria-label="试卷页面">
+      <div id="sheet" class="sheet"><img id="page" width="1547" height="2190" alt=""><svg id="overlay" viewBox="0 0 1000 1415" preserveAspectRatio="none" aria-hidden="true"></svg></div>
+    </div>
+  </section>
+  <aside id="notes" class="notes" aria-label="课堂讲解">
+    <div class="notes-heading"><span class="eyebrow">当前讲题</span><h2 id="note-title"></h2><p id="note-prompt"></p></div>
+    <button id="reveal" class="reveal" type="button" aria-expanded="false" aria-controls="solution">展开参考答案与讲解</button>
+    <div id="solution" hidden><h3>参考答案</h3><p id="note-key"></p><img id="note-figure" alt="原卷作图参考，红线是对称、平移和旋转后的三角形" hidden><h3>讲解</h3><p id="note-detail"></p></div>
+    <p class="note-footer">切换题目时会收起参考答案。</p>
+  </aside>
+</main>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>期中原卷</title>
+<style>
+  body{margin:0;background:#e7edf0;color:#142633;font:16px system-ui,sans-serif}
+  header{display:flex;justify-content:center;align-items:center;gap:18px;padding:12px}
+  h1{font-size:17px;margin:0}
+  button{font:inherit;color:white;background:#17645d;border:0;border-radius:6px;padding:7px 12px;cursor:pointer}
+  img{display:block;width:min(100%,210mm);height:auto;margin:0 auto 12px;background:white}
+  @page{size:A4;margin:0}
+  @media print{header{display:none}body{background:white}img{width:210mm;height:296.8mm;object-fit:contain;margin:0;break-after:page}img:last-child{break-after:auto}}
+</style>
+</head>
+<body>
+<header><h1 id="name"></h1><button id="print" type="button" disabled>打印 / 保存为 PDF</button></header>
+<main id="pages"></main>
+<script src="lessons.js"></script>
+<script>
+  const subject = new URLSearchParams(location.search).get('subject') === 'math' ? 'math' : 'en';
+  const course = courses[subject];
+  document.title = course.edition;
+  document.querySelector('#name').textContent = course.name + ' · ' + course.edition;
+  const pages = document.querySelector('#pages');
+  const print = document.querySelector('#print');
+  const images = Array.from({ length: course.pages }, (_, i) => {
+    const image = new Image();
+    image.alt = course.name + '原卷第' + (i + 1) + '页';
+    image.src = 'assets/' + subject + '-' + (i + 1) + '.webp';
+    pages.append(image);
+    return image.decode();
+  });
+  Promise.all(images).then(() => {
+    print.disabled = false;
+  }).catch(() => {
+    print.textContent = '请刷新重试';
+  });
+  print.addEventListener('click', () => window.print());
+</script>
+</body>
+</html>
