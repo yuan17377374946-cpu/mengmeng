@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#edf6e8">
+  <meta name="description" content="五年级小数乘法估算互动课。用购物、满减和装箱练习估大、估小和范围判断。">
+  <title>估大还是估小｜五上数学</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true">≈</span> 五上数学<span class="brand-divider"></span><small>估算小课</small></a>
+      <nav aria-label="课程目录"><a href="#lab">动手估</a><a href="#method">看方法</a><a href="#practice">做练习</a></nav>
+    </div>
+  </header>
+  <main id="top">
+    <section class="wrap hero" aria-labelledby="lesson-title">
+      <div class="hero-text">
+        <div class="eyebrow"><span></span> 小数乘法 · 解决实际问题</div>
+        <h1 id="lesson-title">估大，还是<span>估小？</span></h1>
+        <p>一袋香蕉还没称完价。带 50 元、35 元，还是 45 元，怎么判断够不够？</p>
+        <a class="primary-link" href="#lab">从香蕉题开始 <span aria-hidden="true">↓</span></a>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="visual-kicker"><span>ESTIMATION</span><span>比较上下界</span></div>
+        <div class="visual-line">
+          <div class="visual-point low"><b>35</b><span>往小估</span></div>
+          <div class="visual-center">实际总价</div>
+          <div class="visual-point high"><b>48</b><span>往大估</span></div>
+        </div>
+        <p>少算的在左边，多算的在右边。</p>
+      </div>
+    </section>
+
+    <section class="wrap section" id="lab" aria-labelledby="lab-title">
+      <div class="section-title"><span class="section-index">01</span><div><h2 id="lab-title">买香蕉，钱够吗？</h2><p>先换预算，再换估法，看看哪一步能帮你下结论。</p></div></div>
+      <div class="lab">
+        <div class="lab-controls">
+          <div class="shop-data"><div><span>购买质量</span><strong>5.5<small> 千克</small></strong></div><div><span>每千克价格</span><strong>7.8<small> 元</small></strong></div></div>
+          <fieldset><legend>① 选一个预算</legend>
+            <div class="budget-picks">
+              <button type="button" data-budget="50" aria-pressed="true">50 元</button>
+              <button type="button" data-budget="35" aria-pressed="false">35 元</button>
+              <button type="button" data-budget="45" aria-pressed="false">45 元</button>
+              <button type="button" data-budget="40" aria-pressed="false">40 元</button>
+            </div>
+            <label class="range-label" for="budget">拖动调整预算 <output id="budget-output" for="budget">50 元</output></label>
+            <input id="budget" type="range" min="32" max="52" step="1" value="50">
+          </fieldset>
+          <fieldset><legend>② 选一种估法</legend>
+            <div id="method-picks" class="method-picks">
+              <button type="button" data-method="up" aria-pressed="true">两项都估大<small>6 × 8</small></button>
+              <button type="button" data-method="down" aria-pressed="false">两项都估小<small>5 × 7</small></button>
+              <button type="button" data-method="closer" aria-pressed="false">只把单价估大<small>5.5 × 8</small></button>
+              <button type="button" data-method="range" aria-pressed="false">同时看上下界<small>35 ～ 48 元</small></button>
+            </div>
+          </fieldset>
+        </div>
+        <div class="lab-result">
+          <div class="lab-result-top"><span class="eyebrow"><span></span> 这次能判断吗</span><span id="verdict" class="verdict" data-tone="yes">一定够</span></div>
+          <p id="equation" class="equation">6 × 8 = 48 元</p>
+          <div class="number-line" id="number-line" aria-label="估算值与预算的数轴" role="img">
+            <div class="axis"></div><div class="interval" id="interval" hidden></div>
+            <div id="markers" class="markers"></div>
+            <div class="axis-ticks" aria-hidden="true"><span>32 元</span><span>42 元</span><span>52 元</span></div>
+          </div>
+          <p id="reason" class="reason" role="status" aria-live="polite"></p>
+          <details class="exact"><summary>看看实际要花多少钱</summary><p>5.5 × 7.8 = <strong>42.9 元</strong>。这个精算结果可以用来核对你的判断。</p></details>
+        </div>
+      </div>
+      <div class="challenge"><b>试一试</b><span>把预算改成 45 元。先选「同时看上下界」，再选「只把单价估大」，比较两次结论。</span></div>
+    </section>
+
+    <section class="wrap section" id="method" aria-labelledby="method-title">
+      <div class="section-title"><span class="section-index">02</span><div><h2 id="method-title">先看题目想证明什么</h2><p>小数乘法估算，就是把正的小数换成好算的数，用结果帮助判断。</p></div></div>
+      <ol class="steps">
+        <li><span>1</span><b>看问题</b><small>圈出「够付」「满减」或「能装下」。</small></li>
+        <li><span>2</span><b>选方向</b><small>想想多算一点或少算一点，哪边更好证明。</small></li>
+        <li><span>3</span><b>列估算式</b><small>换成方便算的数，也可以只估一个因数。</small></li>
+        <li><span>4</span><b>比大小</b><small>把估出来的结果和预算、门槛或限重比较。</small></li>
+        <li><span>5</span><b>说理由</b><small>把估算值和实际值的大小关系说完整。</small></li>
+      </ol>
+      <div class="rules">
+        <article class="rule-card up-rule"><span class="rule-tag">往大估 ↑</span><h3>多算了也付得起</h3><p>把要花的钱往大估，估出来的钱 <strong>≤ 预算</strong>，实际一定付得起。</p><p>如果估出来超过预算，这次还不能判断。</p></article>
+        <article class="rule-card down-rule"><span class="rule-tag">往小估 ↓</span><h3>少算了也付不起</h3><p>把要花的钱往小估，估出来的钱 <strong>＞ 预算</strong>，实际一定付不起。少算后刚好等于预算，要看原价是否一定更高。</p><p>如果估出来低于预算，这次还不能判断。</p></article>
+      </div>
+      <div class="contrast">
+        <div><span>同样是往小估</span><h3>总价达到满减门槛了吗？</h3><p>两套书签每套 19.□ 元，茶杯一共花了 62 元。书签最低按 19 元算，<strong>19 × 2 + 62 = 100 元</strong>。最低总价都达到了 100 元，所以一定能参加满减。</p></div>
+        <div><span>记住问的是谁</span><h3>「能装下」要看你在估什么</h3><p>估的是<strong>货物重量</strong>，多算了也不超限，就一定能装下。估的是<strong>能装的总量</strong>，少算了也够用，就一定能装下。</p></div>
+      </div>
+      <p class="tip"><strong>预算夹在两个估算值中间？</strong> 先试着估得更接近实际。还是判断不了，再精确计算。</p>
+    </section>
+
+    <section class="wrap section" id="practice" aria-labelledby="practice-title">
+      <div class="section-title"><span class="section-index">03</span><div><h2 id="practice-title">这次估算能证明吗？</h2><p>先判断估算方向，再选结论。每道题都有解释。</p></div></div>
+      <div class="quiz">
+        <div class="quiz-top"><div id="quiz-progress" aria-label="练习进度"></div><span id="quiz-count" aria-live="polite">0 / 8 题已答对</span></div>
+        <div class="quiz-body">
+          <div id="question-tag" class="question-tag"></div>
+          <h3 id="question-text"></h3>
+          <p class="given-estimate" id="given-estimate"></p>
+          <fieldset class="quiz-field"><legend>① 这次是往哪边估？</legend><div id="quiz-direction" class="choice-row"></div></fieldset>
+          <fieldset class="quiz-field"><legend>② 只根据这次估算，能得出什么结论？</legend><div id="quiz-outcome" class="choice-row"></div></fieldset>
+          <div id="quiz-feedback" class="quiz-feedback" role="status" aria-live="polite" hidden></div>
+          <div class="quiz-actions"><button type="button" id="check-answer" class="primary-button" disabled>检查答案</button><button type="button" id="show-explanation" class="plain-button" hidden>看解析</button><button type="button" id="next-question" class="secondary-button" hidden>下一题 →</button><button type="button" id="restart-quiz" class="plain-button" hidden>重新练习</button></div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="wrap footer"><b>估算小课</b><span>五年级上册 · 小数乘法</span><a href="#top">回到顶部 ↑</a></footer>
+</body>
+</html>
