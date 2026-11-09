@@ -159,3 +159,34 @@ legend { padding: 0; margin-bottom: 7px; font-weight: 750; font-size: 14px; }
   .quiz-top, .quiz-body { padding-inline: 14px; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+.view-button {
+  padding: 5px 9px;
+  border: 1px solid #a4b7a7;
+  border-radius: 7px;
+  background: var(--paper);
+  color: var(--forest-dark);
+  font-size: 13px;
+  font-weight: 750;
+  white-space: nowrap;
+}
+.view-button[aria-pressed=true] { background: var(--forest); color: white; border-color: var(--forest); }
+.nav nav { flex-wrap: wrap; }
+.classroom .site-header { position: sticky; top: 0; z-index: 5; }
+.classroom .wrap { width: min(1280px, calc(100% - 48px)); }
+.classroom .section { scroll-margin-top: 92px; }
+.classroom .hero { display: block; padding-block: 29px; }
+.classroom .hero h1 { font-size: clamp(36px, 5vw, 63px); }
+.classroom .hero-visual, .classroom .method-picks small { display: none; }
+.classroom .quiz h3 { font-size: clamp(22px, 3vw, 29px); }
+.classroom .shop-data strong { font-size: 30px; }
+.classroom .lab-result .reason, .classroom .given-estimate, .classroom .quiz-feedback { font-size: 18px; }
+.classroom .budget-picks button, .classroom .method-picks button, .classroom .choice-row button { font-size: 17px; }
+.teacher-panel { margin-top: 16px; }
+.teacher-panel p { font-size: 20px; font-weight: 750; margin-bottom: 11px; }
+.teacher-panel button { font-size: 16px; }
+@media (max-width: 600px) {
+  .nav { flex-wrap: wrap; padding-block: 6px; }
+  .classroom .wrap { width: calc(100% - 32px); }
+  .classroom .section { scroll-margin-top: 110px; }
+}

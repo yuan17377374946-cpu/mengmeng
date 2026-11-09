@@ -34,6 +34,60 @@ const budgetButtons = buttons('[data-budget]');
 const methodButtons = buttons('[data-method]');
 let method = 'up';
 
+const lessonUrl = new URL(location.href);
+let classroomMode = lessonUrl.searchParams.get('mode') === 'classroom';
+let revealStage = 0;
+const classroomButton = byId('classroom-mode');
+const fullscreenButton = byId('fullscreen');
+const nextReveal = byId('advance-explanation');
+const classroomStages = [
+  ['先说说你准备怎么估。两个数都要改吗？', '展示估算式'],
+  ['看这个估算结果，钱一定够、一定不够，还是暂时不能判断？', '展示结论和理由'],
+  ['换个预算或估法，可以再问一次。', '收起算式和结论']
+];
+
+function renderClassroom() {
+  document.body.classList.toggle('classroom', classroomMode);
+  press(classroomButton, classroomMode);
+  classroomButton.textContent = classroomMode ? '退出讲课模式' : '线上讲课';
+  fullscreenButton.hidden = !classroomMode || !document.fullscreenEnabled;
+  byId('teacher-panel').hidden = !classroomMode;
+  byId('lab-work').hidden = classroomMode && revealStage < 1;
+  byId('lab-explanation').hidden = classroomMode && revealStage < 2;
+  byId('verdict').hidden = classroomMode && revealStage < 2;
+  byId('teacher-prompt').textContent = classroomStages[revealStage][0];
+  nextReveal.textContent = classroomStages[revealStage][1];
+  if (classroomMode && revealStage < 2) byId('exact').open = false;
+}
+
+classroomButton.addEventListener('click', () => {
+  classroomMode = !classroomMode;
+  revealStage = 0;
+  const url = new URL(location.href);
+  if (classroomMode) url.searchParams.set('mode', 'classroom');
+  else url.searchParams.delete('mode');
+  history.replaceState(null, '', url);
+  renderClassroom();
+});
+
+nextReveal.addEventListener('click', () => {
+  revealStage = (revealStage + 1) % classroomStages.length;
+  renderClassroom();
+});
+
+fullscreenButton.addEventListener('click', async () => {
+  try {
+    if (document.fullscreenElement) await document.exitFullscreen();
+    else await document.documentElement.requestFullscreen();
+  } catch {
+    fullscreenButton.textContent = '请用浏览器全屏';
+  }
+});
+
+document.addEventListener('fullscreenchange', () => {
+  fullscreenButton.textContent = document.fullscreenElement ? '退出全屏' : '全屏';
+});
+
 function renderLab() {
   const budget = Number(budgetInput.value);
   const estimate = estimates[method];
@@ -74,14 +128,20 @@ function renderLab() {
 
 budgetButtons.forEach(button => button.addEventListener('click', () => {
   budgetInput.value = button.dataset.budget;
-  renderLab();
+  updateLab();
 }));
 methodButtons.forEach(button => button.addEventListener('click', () => {
   method = button.dataset.method;
-  renderLab();
+  updateLab();
 }));
-budgetInput.addEventListener('input', renderLab);
-renderLab();
+function updateLab() {
+  if (classroomMode) revealStage = 0;
+  renderClassroom();
+  renderLab();
+}
+
+budgetInput.addEventListener('input', updateLab);
+updateLab();
 
 const questions = [
   {

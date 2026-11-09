@@ -6,14 +6,14 @@
   <meta name="theme-color" content="#edf6e8">
   <meta name="description" content="五年级小数乘法估算互动课。用购物、满减和装箱练习估大、估小和范围判断。">
   <title>估大还是估小｜五上数学</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="app.js" defer></script>
+  <link rel="stylesheet" href="style.css?v=classroom">
+  <script src="app.js?v=classroom" defer></script>
 </head>
 <body>
   <header class="site-header">
     <div class="wrap nav">
       <a class="brand" href="#top"><span class="brand-mark" aria-hidden="true">≈</span> 五上数学<span class="brand-divider"></span><small>估算小课</small></a>
-      <nav aria-label="课程目录"><a href="#lab">动手估</a><a href="#method">看方法</a><a href="#practice">做练习</a></nav>
+      <nav aria-label="课程目录"><a href="#lab">动手估</a><a href="#method">看方法</a><a href="#practice">做练习</a><button id="classroom-mode" class="view-button" type="button" aria-pressed="false">线上讲课</button><button id="fullscreen" class="view-button" type="button" hidden>全屏</button></nav>
     </div>
   </header>
   <main id="top">
@@ -60,15 +60,23 @@
           </fieldset>
         </div>
         <div class="lab-result">
-          <div class="lab-result-top"><span class="eyebrow"><span></span> 这次能判断吗</span><span id="verdict" class="verdict" data-tone="yes">一定够</span></div>
-          <p id="equation" class="equation">6 × 8 = 48 元</p>
-          <div class="number-line" id="number-line" aria-label="估算值与预算的数轴" role="img">
-            <div class="axis"></div><div class="interval" id="interval" hidden></div>
-            <div id="markers" class="markers"></div>
-            <div class="axis-ticks" aria-hidden="true"><span>32 元</span><span>42 元</span><span>52 元</span></div>
+          <div class="lab-result-top"><span class="eyebrow"><span></span> 这次能判断吗</span><span id="verdict" class="verdict" hidden></span></div>
+          <div id="lab-work" hidden>
+            <p id="equation" class="equation"></p>
+            <div class="number-line" id="number-line" aria-label="估算值与预算的数轴" role="img">
+              <div class="axis"></div><div class="interval" id="interval" hidden></div>
+              <div id="markers" class="markers"></div>
+              <div class="axis-ticks" aria-hidden="true"><span>32 元</span><span>42 元</span><span>52 元</span></div>
+            </div>
           </div>
-          <p id="reason" class="reason" role="status" aria-live="polite"></p>
-          <details class="exact"><summary>看看实际要花多少钱</summary><p>5.5 × 7.8 = <strong>42.9 元</strong>。这个精算结果可以用来核对你的判断。</p></details>
+          <div id="lab-explanation" hidden>
+            <p id="reason" class="reason" role="status" aria-live="polite"></p>
+            <details class="exact" id="exact"><summary>看看实际要花多少钱</summary><p>5.5 × 7.8 = <strong>42.9 元</strong>。这个精算结果可以用来核对你的判断。</p></details>
+          </div>
+          <div id="teacher-panel" class="teacher-panel" hidden>
+            <p id="teacher-prompt" role="status"></p>
+            <button id="advance-explanation" class="secondary-button" type="button" aria-controls="lab-work lab-explanation"></button>
+          </div>
         </div>
       </div>
       <div class="challenge"><b>试一试</b><span>把预算改成 45 元。先选「同时看上下界」，再选「只把单价估大」，比较两次结论。</span></div>
