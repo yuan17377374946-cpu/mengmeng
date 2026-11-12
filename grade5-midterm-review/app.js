@@ -5,6 +5,7 @@ const workspace = document.querySelector('.workspace');
 const viewer = byId('viewer');
 const sheet = byId('sheet');
 const pageImage = byId('page');
+const examMarks = byId('exam-marks');
 const overlay = byId('overlay');
 const courseButtons = [...document.querySelectorAll('[data-course]')];
 const toolButtons = [...document.querySelectorAll('[data-tool]')];
@@ -167,6 +168,9 @@ function showTopic(index, toTop = false) {
   pageImage.alt = course.name + '原卷第' + pageNumber + '页';
   pendingScroll = toTop ? 0 : topic[1];
   if (pageImage.getAttribute('src') !== url) pageImage.src = url;
+  examMarks.hidden = subject !== 'math';
+  if (examMarks.hidden) examMarks.removeAttribute('src');
+  else examMarks.src = 'assets/math-marks-' + pageNumber + '.svg';
   scrollToTopic();
   byId('page-index').textContent = pageNumber + ' / ' + course.pages;
   byId('prev').disabled = pageNumber === 1;

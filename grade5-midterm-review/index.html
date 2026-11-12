@@ -5,10 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="五年级期中试卷课堂讲解。英语海淀卷与数学同步卷，支持原卷批注与分题讲解。">
 <title>五年级期中讲题台</title>
-<link rel="stylesheet" href="style.css?v=question-marks">
+<link rel="stylesheet" href="style.css?v=exam-marks">
 <script src="lessons.js" defer></script>
 <script src="explanations.js" defer></script>
-<script src="app.js?v=question-marks" defer></script>
+<script src="app.js?v=exam-marks" defer></script>
 </head>
 <body>
 <header class="masthead">
@@ -36,7 +36,7 @@
       <button id="hide-notes" type="button" aria-expanded="true" aria-controls="notes">收起讲解</button>
     </div>
     <div id="viewer" class="viewer" tabindex="0" aria-label="试卷页面">
-      <div id="sheet" class="sheet"><img id="page" width="1547" height="2190" alt=""><svg id="overlay" viewBox="0 0 1000 1415" preserveAspectRatio="none" aria-hidden="true"></svg></div>
+      <div id="sheet" class="sheet"><img id="page" width="1547" height="2190" alt=""><img id="exam-marks" class="exam-marks" alt="" hidden><svg id="overlay" viewBox="0 0 1000 1415" preserveAspectRatio="none" aria-hidden="true"></svg></div>
     </div>
   </section>
   <aside id="notes" class="notes" aria-label="课堂讲解">

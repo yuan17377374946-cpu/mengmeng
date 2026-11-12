@@ -9,9 +9,17 @@
   header{display:flex;justify-content:center;align-items:center;gap:18px;padding:12px}
   h1{font-size:17px;margin:0}
   button{font:inherit;color:white;background:#17645d;border:0;border-radius:6px;padding:7px 12px;cursor:pointer}
-  img{display:block;width:min(100%,210mm);height:auto;margin:0 auto 12px;background:white}
+  .page{position:relative;width:min(100%,210mm);margin:0 auto 12px;background:white}
+  .page img{display:block;width:100%;height:auto}
+  .page .exam-marks{position:absolute;inset:0;height:100%;pointer-events:none}
   @page{size:A4;margin:0}
-  @media print{header{display:none}body{background:white}img{width:210mm;height:296.8mm;object-fit:contain;margin:0;break-after:page}img:last-child{break-after:auto}}
+  @media print{
+    header{display:none}
+    body{background:white}
+    .page{width:210mm;height:296.8mm;margin:0;break-after:page}
+    .page img{height:100%;object-fit:fill}
+    .page:last-child{break-after:auto}
+  }
 </style>
 </head>
 <body>
@@ -21,17 +29,31 @@
 <script>
   const subject = new URLSearchParams(location.search).get('subject') === 'math' ? 'math' : 'en';
   const course = courses[subject];
-  document.title = course.edition;
-  document.querySelector('#name').textContent = course.name + ' · ' + course.edition;
+  const marked = subject === 'math';
+  const edition = course.edition + (marked ? ' · 易错题标注版' : '');
+  document.title = edition;
+  document.querySelector('#name').textContent = course.name + ' · ' + edition;
   const pages = document.querySelector('#pages');
   const print = document.querySelector('#print');
-  const images = Array.from({ length: course.pages }, (_, i) => {
-    const image = new Image();
-    image.alt = course.name + '原卷第' + (i + 1) + '页';
-    image.src = 'assets/' + subject + '-' + (i + 1) + '.webp';
-    pages.append(image);
-    return image.decode();
-  });
+  const images = [];
+  for (let number = 1; number <= course.pages; number++) {
+    const page = document.createElement('div');
+    page.className = 'page';
+    const image = new Image(1547, 2190);
+    image.alt = course.name + '原卷第' + number + '页';
+    image.src = 'assets/' + subject + '-' + number + '.webp';
+    page.append(image);
+    images.push(image.decode());
+    if (marked) {
+      const marks = new Image();
+      marks.alt = '';
+      marks.className = 'exam-marks';
+      marks.src = 'assets/math-marks-' + number + '.svg';
+      page.append(marks);
+      images.push(marks.decode());
+    }
+    pages.append(page);
+  }
   Promise.all(images).then(() => {
     print.disabled = false;
   }).catch(() => {
