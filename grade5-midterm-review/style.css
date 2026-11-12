@@ -90,3 +90,24 @@ audio{margin-top:6px;width:100%;height:32px}
 #individual-explanations details[open] summary{color:var(--teal);border-bottom:1px solid var(--line)}
 #individual-explanations .individual-answer{padding:8px 0 0;color:var(--teal);font-weight:700;white-space:pre-line}
 #individual-explanations .individual-detail{padding:8px 0 10px}
+
+.question-mark {
+  display: inline-block;
+  margin-inline-start: .4em;
+  padding: 1px 5px;
+  border: 1px solid #e8baac;
+  border-radius: 4px;
+  background: #fff4ef;
+  color: #8a3022;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.4;
+  vertical-align: .1em;
+  white-space: nowrap;
+}
+
+.question-mark-priority {
+  border-color: #9d3526;
+  background: #9d3526;
+  color: #fff;
+}

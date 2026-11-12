@@ -10,6 +10,22 @@ const courseButtons = [...document.querySelectorAll('[data-course]')];
 const toolButtons = [...document.querySelectorAll('[data-tool]')];
 const topicsFor = (course) => courses[course].sections.flatMap(([, topics]) => topics);
 const imageUrl = (course, page) => 'assets/' + course + '-' + page + '.webp';
+const mathQuestionMarks = new Map([
+  ['填空 3', '易错'],
+  ['填空 5', '易错'],
+  ['填空 6', '易错'],
+  ['填空 8', '易错'],
+  ['选择 3', '易错'],
+  ['选择 4', '重点易错'],
+  ['选择 5', '易错'],
+  ['竖式 2', '易错'],
+  ['作图 3', '易错'],
+  ['应用题 1', '易错'],
+  ['应用题 2', '重点易错'],
+  ['应用题 3（2）', '重点易错'],
+  ['判断说理（1）', '易错'],
+  ['判断说理（2）', '易错']
+]);
 const strokesByPage = new Map();
 const lastTopic = {};
 let subject = 'en';
@@ -20,6 +36,21 @@ let tool = 'browse';
 let activeStroke = null;
 let audioUrl = null;
 let pendingScroll = null;
+
+function topicQuestionMark(index) {
+  if (subject !== 'math') return;
+  const marks = questionExplanations.math[index].map(([label]) => mathQuestionMarks.get(label));
+  return marks.includes('重点易错') ? '重点易错' : marks.find(Boolean);
+}
+
+function appendQuestionMark(element, mark) {
+  if (!mark) return;
+  const badge = document.createElement('span');
+  badge.className = 'question-mark';
+  if (mark === '重点易错') badge.classList.add('question-mark-priority');
+  badge.textContent = mark;
+  element.append(badge);
+}
 
 function renderIndex() {
   const nav = byId('contents');
@@ -35,9 +66,11 @@ function renderIndex() {
       const button = document.createElement('button');
       button.type = 'button';
       button.className = 'topic';
-      button.dataset.topic = index++;
+      button.dataset.topic = index;
       const caption = document.createElement('span');
       caption.textContent = label;
+      appendQuestionMark(caption, topicQuestionMark(index));
+      index++;
       const marker = document.createElement('small');
       marker.textContent = 'P' + page;
       button.append(caption, marker);
@@ -78,6 +111,7 @@ function renderIndividualExplanations() {
     const card = document.createElement('details');
     const summary = document.createElement('summary');
     summary.textContent = label;
+    if (subject === 'math') appendQuestionMark(summary, mathQuestionMarks.get(label));
     card.append(summary);
     if (answer) {
       const result = document.createElement('p');
@@ -96,7 +130,9 @@ function renderIndividualExplanations() {
 
 function renderNotes(topic) {
   const [, , title, prompt, answer, detail, figure] = topic;
-  byId('note-title').textContent = title;
+  const heading = byId('note-title');
+  heading.textContent = title;
+  appendQuestionMark(heading, topicQuestionMark(currentTopic));
   byId('note-prompt').textContent = prompt;
   byId('note-key').textContent = answer;
   byId('note-key').hidden = !answer;
